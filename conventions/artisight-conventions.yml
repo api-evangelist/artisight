@@ -1,0 +1,96 @@
+generated: '2026-08-02'
+method: derived
+source: live probes of https://artisight.com/wp-json/ (WordPress REST API) on 2026-08-02
+scope: Applies to the Artisight Website Content API only. Artisight publishes no conventions
+  for the Smart Hospital Platform, which has no public API.
+authentication:
+  style: anonymous read; OAuth 2.0 bearer (scope "mcp") for the mcp/wp-abilities namespaces;
+    WordPress Application Passwords (HTTP Basic) for authenticated REST writes
+  header: Authorization
+  detail: authentication/artisight-authentication.yml
+idempotency:
+  supported: false
+  evidence: No Idempotency-Key header, request-key parameter or replay contract is
+    advertised in the /wp-json/ route index or in any response header observed. WordPress
+    core ships no idempotency mechanism.
+pagination:
+  style: page-number
+  request_params:
+  - name: page
+    default: 1
+    minimum: 1
+  - name: per_page
+    default: 10
+    minimum: 1
+    maximum: 100
+  - name: offset
+    note: supported on most wp/v2 collection routes as an alternative to page
+  - name: search
+  - name: order
+    values: [asc, desc]
+  - name: orderby
+  response_headers:
+  - name: X-WP-Total
+    meaning: total items in the collection
+    observed: '13'
+  - name: X-WP-TotalPages
+    meaning: total pages at the current per_page
+    observed: '7'
+  - name: Link
+    meaning: RFC 8288 rel="next" / rel="prev" cursors
+    observed: <https://artisight.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"
+  cors: Access-Control-Expose-Headers exposes X-WP-Total, X-WP-TotalPages and Link
+    to browsers
+  overflow: requesting a page beyond the last returns HTTP 400 rest_post_invalid_page_number
+sparse_fieldsets:
+  supported: true
+  param: _fields
+  example: /wp-json/wp/v2/posts?per_page=1&_fields=id,slug
+  verified: '2026-08-02'
+field_expansion:
+  supported: true
+  param: _embed
+  note: WordPress embeds linked resources (author, featured media, terms) under _embedded
+    when _embed is present.
+envelope:
+  supported: true
+  param: _envelope
+  note: WordPress optionally wraps the response as {body, status, headers} for clients
+    that cannot read headers.
+context:
+  param: context
+  values: [view, embed, edit]
+  default: view
+  note: Controls which fields are returned; edit requires authentication.
+error_envelope:
+  format: wordpress-rest
+  shape: '{"code": string, "message": string, "data": {"status": integer, "params"?:
+    object, "details"?: object}}'
+  content_type: application/json; charset=UTF-8
+  rfc9457: false
+  catalog: errors/artisight-problem-types.yml
+versioning:
+  scheme: uri-path namespace
+  current: wp/v2
+  namespaces_observed: 28
+  detail: lifecycle/artisight-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  evidence: No X-Request-Id, X-Correlation-Id or equivalent header observed on any
+    2xx/4xx response.
+rate_limiting:
+  documented: false
+  headers_observed: []
+  evidence: No X-RateLimit-*, RateLimit-* or Retry-After headers observed. WordPress
+    core ships no rate-limit signaling; any throttling is at the CDN/WAF layer and
+    is not advertised.
+methods:
+  discovery: Each route advertises its allowed methods in the /wp-json/ route index
+    and echoes them in the Allow response header.
+  observed_allow: GET
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - https://artisight.com/wp-json/wp/v2/posts?per_page=2&page=1
+  - https://artisight.com/wp-json/wp/v2/posts?per_page=1&_fields=id,slug
+  - https://artisight.com/wp-json/

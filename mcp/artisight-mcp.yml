@@ -1,0 +1,56 @@
+generated: '2026-08-02'
+method: searched
+status: published
+source: https://artisight.com/.well-known/oauth-protected-resource
+server:
+  name: artisight
+  transport: http
+  url: https://artisight.com/wp-json/mcp/mcp-oauth-server
+  implementation: WordPress MCP Adapter (mcp namespace in the WordPress REST API),
+    backed by the WordPress Abilities API (wp-abilities/v1)
+  origin: artisight.com corporate WordPress site
+additional_endpoints:
+- url: https://artisight.com/wp-json/mcp/mcp-adapter-default-server
+  methods: [POST, GET, DELETE]
+  note: Second MCP server route registered in the same namespace; also auth-gated.
+- url: https://artisight.com/wp-json/mcp
+  methods: [GET]
+  note: Anonymous namespace route index; lists the registered MCP server routes but
+    no tools.
+authentication:
+  required: true
+  scheme: OAuth 2.0 bearer token (Authorization header)
+  scopes: [mcp]
+  authorization_server: https://artisight.com
+  metadata:
+  - well-known/artisight-oauth-authorization-server.json
+  - well-known/artisight-oauth-protected-resource.json
+tools:
+  enumerated: false
+  reason: tools/list is auth-gated
+  note: 'Anonymous POST of {"jsonrpc":"2.0","id":1,"method":"tools/list"} and of initialize
+    both returned HTTP 401 {"code":"mcp_unauthorized","message":"MCP authentication
+    required."}. The backing wp-abilities/v1/abilities and wp-abilities/v1/categories
+    routes also returned 401 rest_forbidden. The published llms.txt is a Rank Math
+    SEO sitemap index and carries no tool list, so there is no anonymous fallback.
+    Enumerating the real tool set with inputSchema requires an authenticated OAuth
+    introspection pass.'
+caveat: This MCP server is published by the Artisight corporate WordPress site and
+  exposes WordPress site abilities. It is not an interface to the Artisight Smart Hospital
+  Platform, which has no public API.
+x-evidence:
+- fetched: '2026-08-02'
+  url: https://artisight.com/.well-known/oauth-protected-resource
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-02'
+  url: https://artisight.com/wp-json/mcp
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-02'
+  url: https://artisight.com/wp-json/mcp/mcp-oauth-server
+  http_method: POST tools/list
+  http_status: 401
+- fetched: '2026-08-02'
+  url: https://artisight.com/wp-json/wp-abilities/v1/abilities
+  http_status: 401

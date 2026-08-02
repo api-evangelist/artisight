@@ -1,0 +1,29 @@
+generated: '2026-08-02'
+method: searched
+source: https://artisight.com/.well-known/oauth-authorization-server
+docs: null
+note: Derived scopes were not available (no OpenAPI in this repo). These scopes are
+  taken verbatim from the live RFC 8414 authorization-server metadata and the RFC 9728
+  protected-resource metadata Artisight serves from artisight.com. Artisight publishes
+  no scopes/permissions reference page.
+schemes:
+- name: mcp-oauth
+  source: well-known/artisight-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://artisight.com/oauth/authorize
+    tokenUrl: https://artisight.com/oauth/token
+scopes:
+- scope: mcp
+  description: Access to the WordPress MCP server at https://artisight.com/wp-json/mcp/mcp-oauth-server
+    and its backing WordPress Abilities. The only scope advertised by the authorization
+    server; there is no finer-grained read/write split published.
+  flows: [authorizationCode]
+  sources:
+  - well-known/artisight-oauth-authorization-server.json
+  - well-known/artisight-oauth-protected-resource.json
+x-evidence:
+  fetched: '2026-08-02'
+  url: https://artisight.com/.well-known/oauth-authorization-server
+  http_status: 200
+  scopes_supported: [mcp]

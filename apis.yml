@@ -1,18 +1,85 @@
 aid: artisight
 name: Artisight
-description: 'Artisight is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Artisight is a smart hospital platform company founded in 2015 out of
+  Northwestern Medicine that pairs NVIDIA GPU-powered edge sensors — dual 4K cameras,
+  multi-microphone arrays and RTLS radios — with computer vision, speech recognition
+  and deep learning to deliver virtual nursing, ambient clinical documentation, operating-room
+  coordination, patient-safety monitoring, asset and staff tracking, environmental
+  monitoring and predictive analytics across 400+ hospitals in 30+ US health systems.
+  The platform integrates natively and bi-directionally with Epic and Oracle Cerner
+  EHRs, processes video on-premise rather than in the public cloud, and holds HIPAA
+  Expert Determination Certification. Artisight publishes no public developer program,
+  product API or SDK; its only public machine-readable surfaces are the WordPress content
+  REST API, an OAuth 2.0-protected MCP server and an llms.txt on artisight.com.'
+image: https://artisight.com/wp-content/uploads/2026/01/Artisight-Fallback-Homepage-Image-Video.jpg
 url: https://raw.githubusercontent.com/api-evangelist/artisight/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-02'
 modified: '2026-08-02'
 tags:
 - Company
-apis: []
+- Healthcare
+- Artificial Intelligence
+- Computer Vision
+- Hospitals
+- Ambient Intelligence
+- Electronic Health Records
+- Machine Learning
+- Patient Monitoring
+- Internet of Things
+apis:
+- aid: artisight:website-content-api
+  name: Artisight Website Content API
+  description: 'The public WordPress REST API served from artisight.com. It is the
+    marketing/content API for the corporate website — posts, pages, media, taxonomies,
+    case studies and the site route index — not a clinical or Smart Hospital Platform
+    API. Anonymous reads work; writes and the wp-abilities/v1 surface require authentication.
+    523 routes across 28 namespaces were observed live on 2026-08-02.'
+  humanURL: https://artisight.com/
+  baseURL: https://artisight.com/wp-json/
+  tags:
+  - Content
+  - WordPress
+  - REST
+  properties:
+  - type: APICatalog
+    url: well-known/artisight-wp-json-index.json
+  - type: Conventions
+    url: conventions/artisight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/artisight-problem-types.yml
+  x-evidence:
+    fetched: '2026-08-02'
+    url: https://artisight.com/wp-json/
+    http_status: 200
+    content_type: application/json
+- aid: artisight:mcp-server
+  name: Artisight MCP Server
+  description: 'A Model Context Protocol server published from artisight.com by the
+    WordPress MCP Adapter, backed by the WordPress Abilities API. Discovery is anonymous
+    — RFC 8414 authorization-server metadata and RFC 9728 protected-resource metadata
+    are both served from /.well-known/ — but initialize, tools/list and the underlying
+    wp-abilities/v1 routes all return 401 without an OAuth bearer token, so the live
+    tool set could not be enumerated anonymously.'
+  humanURL: https://artisight.com/
+  baseURL: https://artisight.com/wp-json/mcp/mcp-oauth-server
+  tags:
+  - MCP
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/artisight-mcp.yml
+  - type: Authentication
+    url: authentication/artisight-authentication.yml
+  - type: OAuthScopes
+    url: scopes/artisight-scopes.yml
+  x-evidence:
+    fetched: '2026-08-02'
+    url: https://artisight.com/.well-known/oauth-protected-resource
+    http_status: 200
+    content_type: application/json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +87,56 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://artisight.com/
+- type: About
+  url: https://artisight.com/about/
+- type: Blog
+  url: https://artisight.com/blog/
+- type: BlogRSS
+  url: https://artisight.com/feed/
+- type: Press
+  url: https://artisight.com/press-releases/
+- type: CaseStudies
+  url: https://artisight.com/case-studies/
+- type: Partners
+  url: https://artisight.com/partners/
+- type: Careers
+  url: https://artisight.com/careers/
+- type: Support
+  url: https://artisight.com/contact/
+- type: SignUp
+  url: https://artisight.com/demo/
+- type: PrivacyPolicy
+  url: https://artisight.com/privacy-policy/
+- type: GitHubOrganization
+  url: https://github.com/artisight
+- type: Compliance
+  url: https://artisight.com/smart-hospital-technology/
+- type: LLMsTxt
+  url: llms/artisight-llms.txt
+- type: WellKnown
+  url: well-known/artisight-well-known.yml
+- type: MCPServer
+  url: mcp/artisight-mcp.yml
+- type: Authentication
+  url: authentication/artisight-authentication.yml
+- type: OAuthScopes
+  url: scopes/artisight-scopes.yml
+- type: Conformance
+  url: conformance/artisight-conformance.yml
+- type: Conventions
+  url: conventions/artisight-conventions.yml
+- type: ErrorCatalog
+  url: errors/artisight-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/artisight-lifecycle.yml
+- type: DomainSecurity
+  url: security/artisight-domain-security.yml
+x-secondary-market:
+- type: Hiive
   url: https://www.hiive.com/securities/artisight-stock
+x-enrichment:
+  date: '2026-08-02'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

@@ -1,0 +1,66 @@
+generated: '2026-08-02'
+method: derived
+source: live probes of https://artisight.com/wp-json/ (WordPress REST API) on 2026-08-02
+format: wordpress-rest
+rfc9457: false
+envelope:
+  code: machine-readable error slug
+  message: human-readable message
+  data.status: HTTP status code
+  data.params: per-parameter messages (validation errors only)
+  data.details: per-parameter {code, message, data} objects (validation errors only)
+note: Derived by observing real error responses from the live API, not from an OpenAPI
+  document — Artisight publishes no spec and no error reference. Only errors actually
+  reproduced anonymously are listed; this is not the complete WordPress error registry.
+problems:
+- status: 400
+  code: rest_invalid_param
+  title: Invalid parameter(s)
+  detail: 'Returned when a query parameter fails schema validation. Observed: per_page=999
+    -> "per_page must be between 1 (inclusive) and 100 (inclusive)".'
+  remediation: Read the parameter schema for the route from the /wp-json/ route index
+    and clamp the value to its declared minimum/maximum/enum.
+  verified_url: https://artisight.com/wp-json/wp/v2/posts?per_page=999
+- status: 400
+  code: rest_post_invalid_page_number
+  title: The page number requested is larger than the number of pages available
+  detail: Paging past the last page of a collection.
+  remediation: Read X-WP-TotalPages before paging, or follow the Link rel="next" header
+    until it is absent.
+  verified_url: https://artisight.com/wp-json/wp/v2/posts?page=99999
+- status: 401
+  code: rest_cannot_create
+  title: Sorry, you are not allowed to create posts as this user
+  detail: Write operation attempted without credentials.
+  remediation: Authenticate with a WordPress Application Password or an OAuth bearer
+    token before attempting writes.
+  verified_url: https://artisight.com/wp-json/wp/v2/posts (POST)
+- status: 401
+  code: rest_forbidden
+  title: Sorry, you are not allowed to do that
+  detail: Returned by the wp-abilities/v1 routes, which are entirely auth-gated.
+  remediation: Obtain an OAuth 2.0 bearer token with the "mcp" scope from https://artisight.com/oauth/authorize.
+  verified_url: https://artisight.com/wp-json/wp-abilities/v1/abilities
+- status: 401
+  code: mcp_unauthorized
+  title: MCP authentication required
+  detail: Returned by the MCP server for initialize and tools/list without a bearer
+    token. Note this is a plain JSON error, not a JSON-RPC error object.
+  remediation: Complete the OAuth 2.0 authorization-code + PKCE flow described in well-known/artisight-oauth-authorization-server.json.
+  verified_url: https://artisight.com/wp-json/mcp/mcp-oauth-server (POST)
+- status: 404
+  code: rest_no_route
+  title: No route was found matching the URL and request method
+  detail: Unknown path, or a known path called with an unsupported method.
+  remediation: Check the route and its allowed methods against well-known/artisight-wp-json-index.json.
+  verified_url: https://artisight.com/wp-json/wp/v2/nope
+- status: 404
+  code: rest_post_invalid_id
+  title: Invalid post ID
+  detail: Item route called with an id that does not exist or is not readable in the
+    current context.
+  remediation: Resolve ids from the collection route first.
+  verified_url: https://artisight.com/wp-json/wp/v2/posts/999999
+x-evidence:
+  fetched: '2026-08-02'
+  method: anonymous HTTP requests against the live API

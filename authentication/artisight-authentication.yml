@@ -1,0 +1,57 @@
+generated: '2026-08-02'
+method: searched
+source: https://artisight.com/.well-known/oauth-authorization-server
+docs: https://artisight.com/wp-json/
+note: Artisight publishes no developer authentication documentation. This profile is
+  assembled from live, anonymous discovery documents on artisight.com — RFC 8414 authorization-server
+  metadata, RFC 9728 protected-resource metadata, and the WordPress REST route index.
+  The derive-authentication.py pass produced nothing because the repo holds no OpenAPI.
+summary:
+  types: [oauth2, http]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  public_client: true
+  pkce: [S256]
+schemes:
+- name: mcp-oauth
+  type: oauth2
+  source: well-known/artisight-oauth-authorization-server.json
+  issuer: https://artisight.com
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://artisight.com/oauth/authorize
+    tokenUrl: https://artisight.com/oauth/token
+    revocationUrl: https://artisight.com/oauth/revoke
+    scopes: [mcp]
+  grant_types_supported: [authorization_code, refresh_token]
+  response_types_supported: [code]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  applies_to:
+  - https://artisight.com/wp-json/mcp/mcp-oauth-server
+  - https://artisight.com/wp-json/wp-abilities/v1
+- name: application-passwords
+  type: http
+  scheme: basic
+  source: well-known/artisight-wp-json-index.json
+  authorization_endpoint: https://artisight.com/wp-admin/authorize-application.php
+  note: WordPress Application Passwords, advertised in the /wp-json/ index authentication
+    block. Applies to authenticated WordPress REST API calls.
+  applies_to:
+  - https://artisight.com/wp-json/
+anonymous_access:
+  supported: true
+  note: Most wp/v2 read routes (posts, pages, media, taxonomies) are readable without
+    credentials. The mcp and wp-abilities/v1 namespaces are not.
+not_published:
+  product_api_auth: Artisight documents no authentication model for the Smart Hospital
+    Platform; EHR integration is delivered as a native Epic/Cerner interface, not a
+    developer-facing API.
+x-evidence:
+- fetched: '2026-08-02'
+  url: https://artisight.com/.well-known/oauth-authorization-server
+  http_status: 200
+- fetched: '2026-08-02'
+  url: https://artisight.com/wp-json/
+  http_status: 200
