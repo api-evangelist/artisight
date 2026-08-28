@@ -11,6 +11,17 @@ description: 'Artisight is a smart hospital platform company founded in 2015 out
   Expert Determination Certification. Artisight publishes no public developer program,
   product API or SDK; its only public machine-readable surfaces are the WordPress content
   REST API, an OAuth 2.0-protected MCP server and an llms.txt on artisight.com.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://artisight.com/wp-content/uploads/2026/01/Artisight-Fallback-Homepage-Image-Video.jpg
 url: https://raw.githubusercontent.com/api-evangelist/artisight/refs/heads/main/apis.yml
 x-type: company
