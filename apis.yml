@@ -47,11 +47,11 @@ tags:
 - Company
 - Healthcare
 - Artificial Intelligence
-- Computer-Vision
+- Computer Vision
 - Hospitals
 - Ambient Intelligence
 - Electronic Health Records
-- Machine-Learning
+- Machine Learning
 - Patient Monitoring
 - IoT
 tags_raw:
@@ -65,32 +65,23 @@ tags_raw:
 - Machine Learning
 - Patient Monitoring
 - Internet of Things
+- Computer-Vision
+- Machine-Learning
 apis:
-- aid: artisight:website-content-api
-  name: Artisight Website Content API
-  description: 'The public WordPress REST API served from artisight.com. It is the
-    marketing/content API for the corporate website — posts, pages, media, taxonomies,
-    case studies and the site route index — not a clinical or Smart Hospital Platform
-    API. Anonymous reads work; writes and the wp-abilities/v1 surface require authentication.
-    523 routes across 28 namespaces were observed live on 2026-08-02.'
-  humanURL: https://artisight.com/
-  baseURL: https://artisight.com/wp-json/
+- aid: artisight:artisight-com-website-wordpress-rest
+  name: Artisight Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Artisight website at artisight.com: the
+    route index of the site''s content management system, catalogued as one site surface rather than as
+    separate APIs.'
+  baseURL: https://artisight.com/wp-json
   tags:
-  - Content
   - WordPress
-  - REST
+  x-surface: platform-generated
   properties:
-  - type: APICatalog
-    url: well-known/artisight-wp-json-index.json
-  - type: Conventions
-    url: conventions/artisight-conventions.yml
-  - type: ErrorCatalog
-    url: errors/artisight-problem-types.yml
-  x-evidence:
-    fetched: '2026-08-02'
-    url: https://artisight.com/wp-json/
-    http_status: 200
-    content_type: application/json
+  - type: Documentation
+    url: https://artisight.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: artisight:mcp-server
   name: Artisight MCP Server
   description: 'A Model Context Protocol server published from artisight.com by the
@@ -116,6 +107,9 @@ apis:
     url: https://artisight.com/.well-known/oauth-protected-resource
     http_status: 200
     content_type: application/json
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: mcp-plugin
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -168,6 +162,8 @@ common:
   url: lifecycle/artisight-lifecycle.yml
 - type: DomainSecurity
   url: security/artisight-domain-security.yml
+- type: APICatalog
+  url: well-known/artisight-wp-json-index.json
 x-secondary-market:
 - type: Hiive
   url: https://www.hiive.com/securities/artisight-stock
