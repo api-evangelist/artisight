@@ -64,28 +64,105 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Artisight is a smart hospital platform company founded in 2015 out of Northwestern Medicine. It pairs NVIDIA GPU-powered edge sensors — dual 4K cameras, multi-microphone arrays and RTLS radios — with computer vision, speech recognition and deep learning to deliver virtual nursing, ambient clinical documentation, operating-room coordination, patient-safety monitoring, asset and staff tracking, environmental monitoring and predictive analytics across 400+ hospitals in 30+ US health systems.
+Artisight is a smart hospital platform company founded in 2015 out of Northwestern Medicine that pairs NVIDIA GPU-powered edge sensors — dual 4K cameras, multi-microphone arrays and RTLS radios — with computer vision, speech recognition and deep learning to deliver virtual nursing, ambient clinical documentation, operating-room coordination, patient-safety monitoring, asset and staff tracking, environmental monitoring and predictive analytics across 400+ hospitals in 30+ US health systems. The platform integrates natively and bi-directionally with Epic and Oracle Cerner EHRs, processes video on-premise rather than in the public cloud, and holds HIPAA Expert Determination Certification. Artisight publishes no public developer program, product API or SDK; its only public machine-readable surfaces are the WordPress content REST API, an OAuth 2.0-protected MCP server and an llms.txt on artisight.com.
 
-- Website: https://artisight.com/
-- Platform: https://artisight.com/smart-hospital-technology/
-- Partners (Epic, Oracle Cerner and others): https://artisight.com/partners/
-- Blog: https://artisight.com/blog/
-- Press: https://artisight.com/press-releases/
+**Areas:** Company · Healthcare · Artificial Intelligence · Computer Vision · Hospitals · Ambient Intelligence · Electronic Health Records · Machine Learning · Patient Monitoring · IoT
 
-## API posture
+## Artisight on APIs.io
 
-Artisight publishes **no public developer program, product API, SDK or OpenAPI**. EHR integration is delivered as a native, bi-directional Epic / Oracle Cerner interface ("zero API fees"), not a developer-facing API. `docs.`, `developer.`, `api.`, `app.`, `status.` and `trust.` artisight.com do not resolve in DNS.
+Everything profiled for Artisight is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/artisight/](https://apis.io/providers/artisight/)** — or go straight to one of the APIs or properties below.
 
-What Artisight *does* publish, all on the corporate WordPress site and captured here:
+### APIs (2)
 
-| Surface | Location | Notes |
-|---|---|---|
-| WordPress REST API | `https://artisight.com/wp-json/` | 523 routes, 28 namespaces; anonymous reads |
-| MCP server | `https://artisight.com/wp-json/mcp/mcp-oauth-server` | Live, but `initialize`/`tools/list` are 401 auth-gated |
-| OAuth 2.0 AS metadata (RFC 8414) | `/.well-known/oauth-authorization-server` | authorization_code + refresh_token, PKCE S256, scope `mcp` |
-| OAuth 2.0 protected-resource metadata (RFC 9728) | `/.well-known/oauth-protected-resource` | |
-| llms.txt | `/llms.txt` | Rank Math SEO sitemap index |
+- [Artisight Website (WordPress REST)](https://apis.io/apis/artisight/artisight-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Artisight website at artisight.com: the route index of the site's content management system, catalogued as…
+- [Artisight MCP Server](https://apis.io/apis/artisight/mcp-server/) — A Model Context Protocol server published from artisight.com by the WordPress MCP Adapter, backed by the WordPress Abilities API. Discovery is anonymous —…
 
-No `security.txt`, no A2A agent card, no status page, no changelog, no published SDKs or Postman collection.
+### Published properties
 
-Compliance is published on the product page: HIPAA Expert Determination Certification, an AICPA SOC seal, AES-256 at rest / TLS 1.3 in transit, audit logging and RBAC, and on-premise video processing.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [artisight](https://apis.io/servers/artisight/artisight/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Artisight Authentication](https://apis.io/security/artisight/artisight-authentication/)
+- [Artisight Domain Security](https://apis.io/security/artisight/artisight-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Artisight Scopes](https://apis.io/scopes/artisight/artisight-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://artisight.com/)
+- [Sign up](https://artisight.com/demo/)
+- [Support](https://artisight.com/contact/)
+- [Blog](https://artisight.com/blog/)
+- [Compliance](https://artisight.com/smart-hospital-technology/)
+- [Privacy policy](https://artisight.com/privacy-policy/)
+- [GitHub](https://github.com/artisight)
+
+## API Evangelist rating
+
+**Kin Score 24.9** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 67.5 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 31.6 |
+
+**Agent readiness 17.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 36.0** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/artisight/](https://apis.io/providers/artisight/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Artisight: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/artisight/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
